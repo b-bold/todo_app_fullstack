@@ -2,6 +2,7 @@
 const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
+const uuid = require("uuid")
 const port = process.env.port || 3000
 app.use(bodyParser.json())
 
@@ -33,14 +34,28 @@ app.get('/todos/:id', (req, res) => {
     res.json(todo);
 })
 
-// app.post('todos/:id', (req, res) => {
-//     let.push 
-//     res.json([]);
+app.post('/todos', (req, res) => {
+    let body = req.body;
+    todos.push({id: uuid.v4(), ...body});
+    res.json((todos));
+})
+// not working. getting error in postman. using this tutorial: 
+// https://www.youtube.com/watch?v=2u8VAAyvFv0
+// app.put('todos/:id', (req, res) => {
+//     let todo = todos.find(todo => todo.id == req.params.id)
+//     if (todo) {
+//         todo.desc = req.body.desc;
+//         todo.completed = req.body.completed;
+//         console.log(todo)
+//         res.json(todos);
+//     } else {
+//         res.send("Todo with given id doesn't exist")
+//     }
 // })
 
-// app.delete('todos/:id', (req, res) => {
-//     res.json([]);
-// })
+app.delete('todos/:id', (req, res) => {
+    res.json([]);
+})
 
 app.listen(port, () => {
     console.log('app is listening in Port:', port);
